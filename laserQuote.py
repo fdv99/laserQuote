@@ -1,6 +1,27 @@
-
+import sys
+import sqlite3
+import csv
+import pandas as pd
 # This program will replace my excel spreadsheet of the same purpose, storing quotes in a database or an excel file
 
+def loadStainlessDB():
+    # This loads the cut data into the stainless table, no need to call again
+    df = pd.read_csv('stainless_cutdata.csv')
+    df.columns = df.columns.str.strip()
+    con = sqlite3.connect('cutdata.db')
+    df.to_sql("stainless", con)
+    con.close()
+
+def loadCarbonDB():
+    # This loads the cut data into the carbon table, no need to call again
+    df = pd.read_csv('carbon_cutdata.csv')
+    df.columns = df.columns.str.strip()
+    con = sqlite3.connect('cutdata.db')
+    df.to_sql("carbon", con)
+    con.close()
+
+
+'''
 # Variables
 materialType = 0
 materialThickness = 0
@@ -33,3 +54,4 @@ print(cutSpeed)
 material(1, 1)
 
 print(cutSpeed)
+'''
