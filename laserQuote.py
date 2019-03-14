@@ -21,8 +21,14 @@ def loadCarbonDB():
     con.close()
 
 
-'''
+def laserDB():
+    con = sqlite3.connect('cutdata.db')
+
+
+carbonSizes = ['0.035 [20GA]', '0.047 [18GA]', '0.060 [16GA]', '0.075 [14GA]', '0.105 [12GA]', '0.120 [11GA]', '0.187 [HRPO]', '0.250 [HRPO]', '0.375 [HRPO]', '0.500 [HRPO]']
+stainlessSizes = ['0.035 [20GA]', '0.047 [18GA]', '0.060 [16GA]', '0.075 [14GA]', '0.120 [11GA]', '0.187 [3/16]']
 # Variables
+"""
 materialType = 0
 materialThickness = 0
 length = 0 
@@ -39,19 +45,27 @@ sheetHeight = 60
 sheetWidth = 120
 sheetUnitCost = 0
 materialCost = 0
+"""
 
-def material(materialType, materialThickness):
-    sheetUnitCost = 1 #go to correct table based on materialType, and get the correct cell on materialThickness row
-    cutSpeed = 10
-    pierceTime = 5
-    return cutSpeed, pierceTime
+
+def quote():
+    materialType = input("Material, carbon or stainless:")
+    if materialType == 'carbon':
+        materialThickness = '0.120 [11GA]'
+        # display carbonSizes list and pick size needed
+    elif materialType == 'stainless':
+        # display stainlessSizes list and pick size needed
+        materialThickness = '0.120 [11GA]'
+    else:
+        print("Not a valid material type.")
+    con = sqlite3.connect('cutdata.db')
+    cursor = con.cursor()
+    cursor.execute('SELECT CUT_SPEED FROM ? WHERE STEEL == ?', (materialType, materialThickness,))
+    cutSpeed = cursor.fetchone()
+    print(cutSpeed)
 
 def laserTime(length, pierce, cutSpeed, pierceTime):
     cutTime = (length / cutSpeed) + ((pierce * pierceTime) / 60)
 
-print(cutSpeed)
 
-material(1, 1)
-
-print(cutSpeed)
-'''
+quote()
