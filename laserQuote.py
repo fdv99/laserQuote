@@ -21,7 +21,7 @@ def laserDB():
 """
 materialType = 0
 materialThickness = 0
-length = 0 
+
 pierce = 0
 cutSpeed = 0
 pierceTime = 0
@@ -39,13 +39,17 @@ materialCost = 0
 
 
 def quote():
+    laserRate = 105
+    handleRate = 65
+    handleTime = 30
+    sheetLength = 120
+    sheetWidth = 60
     materialType = input("Material, c or s: ")
-    if materialType == 'c':
-        materialThickness = 0.120
-    elif materialType == 's':
-        materialThickness = 0.120
-    else:
-        print("Not a valid material type.")
+    # if statement to make sure only c or s was entered
+    materialThickness = 0.187
+    length = int(input("Enter the length of cut: "))
+    pierce = int(input("Enter the number of pierces: "))
+    
     con = sqlite3.connect('cutdata.db')
     cursor = con.cursor()
     cursor.execute('SELECT * FROM cutTable WHERE steel = ? AND type = ?', (materialThickness, materialType))
@@ -57,6 +61,16 @@ def quote():
     print(cutSpeed)
     print(pierceTime)
     print(sheetUnitCost)
+    cutTime = (length / cutSpeed) + ((pierce * pierceTime) / 60)
+    laserCost = (cutTime/60) * laserRate
+    handleCost = (handleTime/60) * handleRate
+    materialCost = ((sheetLength * sheetWidth) / 144) * sheetUnitCost
+    totalCost = laserCost + handleCost + materialCost
+    print(cutTime)
+    print(laserCost)
+    print(handleCost)
+    print(materialCost)
+    print(totalCost)
 
 def laserTime(length, pierce, cutSpeed, pierceTime):
     cutTime = (length / cutSpeed) + ((pierce * pierceTime) / 60)
