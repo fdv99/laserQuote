@@ -2,8 +2,12 @@ import sys
 import sqlite3
 import csv
 import pandas as pd
+import tkinter as tk
 # This program will replace my excel spreadsheet of the same purpose, storing quotes in a database or an excel file
 
+root = tk.Tk()
+root.title("V6 Laser Quote")
+label = tk.Label(root, text = "Quote for Laser Cutting").pack()
 def loadCutDataDB():
     # This loads the cut data into the carbon table, no need to call again
     df = pd.read_csv('cutdata.csv')
@@ -78,3 +82,4 @@ def quote():
     print(totalCost)
 
 quote()
+root.mainloop()
