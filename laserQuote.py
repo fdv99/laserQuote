@@ -39,14 +39,19 @@ materialCost = 0
 
 
 def quote():
+    #Standard prices and times for laser, handling, etc..
     laserRate = 105
     handleRate = 65
     handleTime = 30
     sheetLength = 120
     sheetWidth = 60
+
     materialType = input("Material, c or s: ")
-    # if statement to make sure only c or s was entered
+    if materialType != 'c' or 's':
+        print('Not a valid Material type!')
+        materialType = input("Material, c or s: ")
     materialThickness = 0.187
+
     length = int(input("Enter the length of cut: "))
     pierce = int(input("Enter the number of pierces: "))
     
@@ -71,9 +76,5 @@ def quote():
     print(handleCost)
     print(materialCost)
     print(totalCost)
-
-def laserTime(length, pierce, cutSpeed, pierceTime):
-    cutTime = (length / cutSpeed) + ((pierce * pierceTime) / 60)
-
 
 quote()
