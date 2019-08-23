@@ -41,22 +41,6 @@ sheetUnitCost = 0
 materialCost = 0
 """
 
-materialTypeLabel = tk.Label(root, text="Material Type [c,s]:").grid(row=1)
-materialTypeEntry = tk.Entry(root).grid(row=1,column=1)
-
-materialThickLabel = tk.Label(root, text="Material Thickness:").grid(row=2)
-materialThickEntry = tk.Entry(root).grid(row=2,column=1)
-    
-
-lengthLabel = tk.Label(root, text="Cut Length:").grid(row=3)
-lengthEntry = tk.Entry(root).grid(row=3,column=1)
-
-pierceLabel = tk.Label(root, text="Pierces:").grid(row=3)
-pierceEntry = tk.Entry(root).grid(row=3,column=1)
-
-    
-calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=4,column=1)
-
 def quote():
     #Standard prices and times for laser, handling, etc..
     laserRate = 105
@@ -106,5 +90,20 @@ def quote():
     print(materialCost)
     print(f"Total Cost: {totalCost}")
 
-quote()
+materialTypeLabel = tk.Label(root, text="Material Type [c,s]:").grid(row=1)
+materialTypeEntry = tk.Entry(root).grid(row=1,column=1)
+
+materialThickLabel = tk.Label(root, text="Material Thickness:").grid(row=2)
+materialThickEntry = tk.Entry(root).grid(row=2,column=1)
+    
+lengthLabel = tk.Label(root, text="Cut Length:").grid(row=3)
+lengthEntry = tk.Entry(root).grid(row=3,column=1)
+
+pierceLabel = tk.Label(root, text="Pierces:").grid(row=3)
+pierceEntry = tk.Entry(root).grid(row=3,column=1)
+    
+calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=4,column=1)
+
+
+
 root.mainloop()
