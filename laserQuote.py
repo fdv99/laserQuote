@@ -51,7 +51,7 @@ def quote():
     engineerRate = 90
     engineerTime = 20
 
-    
+    #These do not work as the entries are outside of the function
     materialType = materialTypeEntry.get()
     materialThickness = materialThickEntry.get()
     length = lengthEntry.get()
@@ -99,10 +99,11 @@ materialThickEntry = tk.Entry(root).grid(row=2,column=1)
 lengthLabel = tk.Label(root, text="Cut Length:").grid(row=3)
 lengthEntry = tk.Entry(root).grid(row=3,column=1)
 
-pierceLabel = tk.Label(root, text="Pierces:").grid(row=3)
-pierceEntry = tk.Entry(root).grid(row=3,column=1)
-    
-calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=4,column=1)
+pierceLabel = tk.Label(root, text="Pierces:").grid(row=4)
+pierceEntry = tk.Entry(root).grid(row=4,column=1)
+
+# Error because the get is inside quote function    
+calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=5,column=1)
 
 
 
