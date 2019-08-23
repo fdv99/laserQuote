@@ -20,21 +20,33 @@ def loadCutDataDB():
 def laserDB():
     con = sqlite3.connect('cutdata.db')
 
-materialTypeLabel = tk.Label(root, text="Material Type [c,s]:").grid(row=1)
+materialTypeLabel = tk.Label(root, text="Material Type [c,s]:", anchor="e").grid(row=1)
 materialTypeEntry = tk.Entry(root)
 materialTypeEntry.grid(row=1,column=1)
 
-materialThickLabel = tk.Label(root, text="Material Thickness:").grid(row=2)
+materialThickLabel = tk.Label(root, text="Material Thickness:", anchor="e").grid(row=2)
 materialThickEntry = tk.Entry(root)
 materialThickEntry.grid(row=2,column=1) 
 
-lengthLabel = tk.Label(root, text="Cut Length:").grid(row=3)
+lengthLabel = tk.Label(root, text="Cut Length:", anchor="e").grid(row=3)
 lengthEntry = tk.Entry(root)
 lengthEntry.grid(row=3,column=1)
 
-pierceLabel = tk.Label(root, text="Pierces:").grid(row=4)
+pierceLabel = tk.Label(root, text="Pierces:", anchor="e").grid(row=4)
 pierceEntry = tk.Entry(root)
 pierceEntry.grid(row=4,column=1)
+
+matCostLabel = tk.Label(root, text="Material Cost:", anchor="e").grid(row=6)
+matCostEntry = tk.Entry(root)
+matCostEntry.grid(row=6, column=1)
+
+laserCostLabel = tk.Label(root, text="Laser Cost:", anchor="e").grid(row=7)
+laserCostEntry = tk.Entry(root)
+laserCostEntry.grid(row=7, column=1)
+
+totalCostLabel = tk.Label(root, text="Total Cost:", anchor="e").grid(row=8)
+totalCostEntry = tk.Entry(root)
+totalCostEntry.grid(row=8, column=1)
 
 def quote():
     #Standard prices and times for laser, handling, etc..
