@@ -36,47 +36,66 @@ pierceLabel = tk.Label(root, text="Pierces:", anchor="e").grid(row=4)
 pierceEntry = tk.Entry(root)
 pierceEntry.grid(row=4,column=1)
 
-matCostLabel = tk.Label(root, text="Material Cost:", anchor="e").grid(row=6)
+sheetLengthLabel = tk.Label(root, text="Sheet Length:", anchor="e").grid(row=5)
+sheetLengthEntry = tk.Entry(root)
+sheetLengthEntry.grid(row=5,column=1)
+
+sheetWidthLabel = tk.Label(root, text="Sheet Length:", anchor="e").grid(row=6)
+sheetWidthEntry = tk.Entry(root)
+sheetWidthEntry.grid(row=6,column=1)
+
+matCostLabel = tk.Label(root, text="Material Cost:", anchor="e").grid(row=8)
 matCostEntry = tk.Entry(root)
-matCostEntry.grid(row=6, column=1)
+matCostEntry.grid(row=8, column=1)
 
-laserCostLabel = tk.Label(root, text="Laser Cost:", anchor="e").grid(row=7)
+laserCostLabel = tk.Label(root, text="Laser Cost:", anchor="e").grid(row=9)
 laserCostEntry = tk.Entry(root)
-laserCostEntry.grid(row=7, column=1)
+laserCostEntry.grid(row=9, column=1)
 
-totalCostLabel = tk.Label(root, text="Total Cost:", anchor="e").grid(row=8)
+totalCostLabel = tk.Label(root, text="Total Cost:", anchor="e").grid(row=10)
 totalCostEntry = tk.Entry(root)
-totalCostEntry.grid(row=8, column=1)
+totalCostEntry.grid(row=10, column=1)
+
+laserRateLabel = tk.Label(root, text="Laser Rate:", anchor="e").grid(row=1, column=3)
+laserRateEntry = tk.Entry(root)
+laserRateEntry.grid(row=1, column=4)
+
+handleRateLabel = tk.Label(root, text="Handling Rate:", anchor="e").grid(row=2, column=3)
+handleRateEntry = tk.Entry(root)
+handleRateEntry.grid(row=2, column=4)
+
+handleTimeLabel = tk.Label(root, text="Handling Time:", anchor="e").grid(row=3, column=3)
+handleTimeEntry = tk.Entry(root)
+handleTimeEntry.grid(row=3, column=4)
+
+engineerRateLabel = tk.Label(root, text="Engineering Rate:", anchor="e").grid(row=4, column=3)
+engineerRateEntry = tk.Entry(root)
+engineerRateEntry.grid(row=4, column=4)
+
+engineerTimeLabel = tk.Label(root, text="Engineering Time:", anchor="e").grid(row=5, column=3)
+engineerTimeEntry = tk.Entry(root)
+engineerTimeEntry.grid(row=5, column=4)
 
 def quote():
     #Standard prices and times for laser, handling, etc..
-    laserRate = 105
-    handleRate = 65
-    handleTime = 30
-    sheetLength = 120
-    sheetWidth = 60
-    engineerRate = 90
-    engineerTime = 20
+    global laserRate = 105
+    global handleRate = 65
+    global handleTime = 30
+    global sheetLength
+    global sheetWidth
+    global engineerRate = 90
+    global engineerTime = 20
     global materialTypeEntry
     global materialThickEntry
     global lengthEntry
     global pierceEntry
-    #These do not work as the entries are outside of the function
+    
     materialType = materialTypeEntry.get()
     materialThickness = float(materialThickEntry.get())
     length = int(lengthEntry.get())
     pierce = int(pierceEntry.get())
-
-
-    #This section does not work right, don't understand why right now.
-    '''materialType = input("Material, c or s: ").strip()
-    if materialType == 'c' or 's':
-        materialThickness = 0.187
-    else:
-        print('Not a valid Material type!')
-
-    length = int(input("Enter the length of cut: "))
-    pierce = int(input("Enter the number of pierces: "))'''
+    sheetLength = int(sheetLengthEntry.get())
+    sheetWidth = int(sheetWidthEntry.get())
     
     con = sqlite3.connect('cutdata.db')
     cursor = con.cursor()
@@ -103,7 +122,8 @@ def quote():
 
 
 # Error because the get is inside quote function    
-calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=5,column=1)
+calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=7,column=1)
+updateBut = tk.Button(root, text="Update", command=quote).grid(row=6,column=4)
 
 
 
