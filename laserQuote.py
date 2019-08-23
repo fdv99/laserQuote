@@ -15,31 +15,26 @@ def loadCutDataDB():
     con = sqlite3.connect('cutdata.db')
     df.to_sql("cutTable", con)
     con.close()
-
 # loadCutDataDB()
 
 def laserDB():
     con = sqlite3.connect('cutdata.db')
 
-# Variables
-"""
-materialType = 0
-materialThickness = 0
+materialTypeLabel = tk.Label(root, text="Material Type [c,s]:").grid(row=1)
+materialTypeEntry = tk.Entry(root)
+materialTypeEntry.grid(row=1,column=1)
 
-pierce = 0
-cutSpeed = 0
-pierceTime = 0
-handleTime = 20
-sheets = 1
-engineerTime = 20
-shopRate = 65
-engineerRate = 85
-laserRate = 105
-sheetHeight = 60
-sheetWidth = 120
-sheetUnitCost = 0
-materialCost = 0
-"""
+materialThickLabel = tk.Label(root, text="Material Thickness:").grid(row=2)
+materialThickEntry = tk.Entry(root)
+materialThickEntry.grid(row=2,column=1) 
+
+lengthLabel = tk.Label(root, text="Cut Length:").grid(row=3)
+lengthEntry = tk.Entry(root)
+lengthEntry.grid(row=3,column=1)
+
+pierceLabel = tk.Label(root, text="Pierces:").grid(row=4)
+pierceEntry = tk.Entry(root)
+pierceEntry.grid(row=4,column=1)
 
 def quote():
     #Standard prices and times for laser, handling, etc..
@@ -50,12 +45,15 @@ def quote():
     sheetWidth = 60
     engineerRate = 90
     engineerTime = 20
-
+    global materialTypeEntry
+    global materialThickEntry
+    global lengthEntry
+    global pierceEntry
     #These do not work as the entries are outside of the function
     materialType = materialTypeEntry.get()
-    materialThickness = materialThickEntry.get()
-    length = lengthEntry.get()
-    pierce = pierceEntry.get()
+    materialThickness = float(materialThickEntry.get())
+    length = int(lengthEntry.get())
+    pierce = int(pierceEntry.get())
 
 
     #This section does not work right, don't understand why right now.
@@ -90,17 +88,7 @@ def quote():
     print(materialCost)
     print(f"Total Cost: {totalCost}")
 
-materialTypeLabel = tk.Label(root, text="Material Type [c,s]:").grid(row=1)
-materialTypeEntry = tk.Entry(root).grid(row=1,column=1)
 
-materialThickLabel = tk.Label(root, text="Material Thickness:").grid(row=2)
-materialThickEntry = tk.Entry(root).grid(row=2,column=1)
-    
-lengthLabel = tk.Label(root, text="Cut Length:").grid(row=3)
-lengthEntry = tk.Entry(root).grid(row=3,column=1)
-
-pierceLabel = tk.Label(root, text="Pierces:").grid(row=4)
-pierceEntry = tk.Entry(root).grid(row=4,column=1)
 
 # Error because the get is inside quote function    
 calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=5,column=1)
