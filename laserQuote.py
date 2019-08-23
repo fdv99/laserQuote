@@ -7,7 +7,7 @@ import tkinter as tk
 
 root = tk.Tk()
 root.title("V6 Laser Quote")
-label = tk.Label(root, text = "Quote for Laser Cutting").pack()
+label = tk.Label(root, text = "Quote for Laser Cutting").grid(row=0,column=0)
 def loadCutDataDB():
     # This loads the cut data into the carbon table, no need to call again
     df = pd.read_csv('cutdata.csv')
@@ -41,6 +41,21 @@ sheetUnitCost = 0
 materialCost = 0
 """
 
+materialTypeLabel = tk.Label(root, text="Material Type [c,s]:").grid(row=1)
+materialTypeEntry = tk.Entry(root).grid(row=1,column=1)
+
+materialThickLabel = tk.Label(root, text="Material Thickness:").grid(row=2)
+materialThickEntry = tk.Entry(root).grid(row=2,column=1)
+    
+
+lengthLabel = tk.Label(root, text="Cut Length:").grid(row=3)
+lengthEntry = tk.Entry(root).grid(row=3,column=1)
+
+pierceLabel = tk.Label(root, text="Pierces:").grid(row=3)
+pierceEntry = tk.Entry(root).grid(row=3,column=1)
+
+    
+calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=4,column=1)
 
 def quote():
     #Standard prices and times for laser, handling, etc..
@@ -49,15 +64,25 @@ def quote():
     handleTime = 30
     sheetLength = 120
     sheetWidth = 60
+    engineerRate = 90
+    engineerTime = 20
 
-    materialType = input("Material, c or s: ")
-    if materialType != 'c' or 's':
+    
+    materialType = materialTypeEntry.get()
+    materialThickness = materialThickEntry.get()
+    length = lengthEntry.get()
+    pierce = pierceEntry.get()
+
+
+    #This section does not work right, don't understand why right now.
+    '''materialType = input("Material, c or s: ").strip()
+    if materialType == 'c' or 's':
+        materialThickness = 0.187
+    else:
         print('Not a valid Material type!')
-        materialType = input("Material, c or s: ")
-    materialThickness = 0.187
 
     length = int(input("Enter the length of cut: "))
-    pierce = int(input("Enter the number of pierces: "))
+    pierce = int(input("Enter the number of pierces: "))'''
     
     con = sqlite3.connect('cutdata.db')
     cursor = con.cursor()
@@ -72,14 +97,14 @@ def quote():
     print(sheetUnitCost)
     cutTime = (length / cutSpeed) + ((pierce * pierceTime) / 60)
     laserCost = (cutTime/60) * laserRate
-    handleCost = (handleTime/60) * handleRate
+    handleCost = ((handleTime/60) * handleRate) + ((engineerTime/60) * engineerRate)
     materialCost = ((sheetLength * sheetWidth) / 144) * sheetUnitCost
     totalCost = laserCost + handleCost + materialCost
-    print(cutTime)
-    print(laserCost)
+    print(f"Cut Time: {cutTime}")
+    print(f"Laser Cost: {laserCost}")
     print(handleCost)
     print(materialCost)
-    print(totalCost)
+    print(f"Total Cost: {totalCost}")
 
 quote()
 root.mainloop()
