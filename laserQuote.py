@@ -44,17 +44,21 @@ sheetWidthLabel = tk.Label(root, text="Sheet Width:", anchor="e").grid(row=6)
 sheetWidthEntry = tk.Entry(root)
 sheetWidthEntry.grid(row=6,column=1)
 
-matCostLabel = tk.Label(root, text="Material Cost:", anchor="e").grid(row=8)
+sheetNumberLabel = tk.Label(root, text="Number of sheets:", anchor="e").grid(row=7)
+sheetNumberEntry = tk.Entry(root)
+sheetNumberEntry.grid(row=7,column=1)
+
+matCostLabel = tk.Label(root, text="Material Cost:", anchor="e").grid(row=9)
 matCostEntry = tk.Entry(root)
-matCostEntry.grid(row=8, column=1)
+matCostEntry.grid(row=9, column=1)
 
-laserCostLabel = tk.Label(root, text="Laser Cost:", anchor="e").grid(row=9)
+laserCostLabel = tk.Label(root, text="Laser Cost:", anchor="e").grid(row=10)
 laserCostEntry = tk.Entry(root)
-laserCostEntry.grid(row=9, column=1)
+laserCostEntry.grid(row=10, column=1)
 
-totalCostLabel = tk.Label(root, text="Total Cost:", anchor="e").grid(row=10)
+totalCostLabel = tk.Label(root, text="Total Cost:", anchor="e").grid(row=11)
 totalCostEntry = tk.Entry(root)
-totalCostEntry.grid(row=10, column=1)
+totalCostEntry.grid(row=11, column=1)
 
 laserRateLabel = tk.Label(root, text="Laser Rate:", anchor="e").grid(row=1, column=3)
 laserRateEntry = tk.Entry(root)
@@ -94,6 +98,7 @@ def quote():
     global materialThickEntry
     global lengthEntry
     global pierceEntry
+    global sheetNumber
     
     materialType = materialTypeEntry.get()
     materialThickness = float(materialThickEntry.get())
@@ -106,6 +111,7 @@ def quote():
     handleTime = int(handleTimeEntry.get())
     engineerRate = int(engineerRateEntry.get())
     engineerTime = int(engineerTimeEntry.get())
+    sheetNumber = int(sheetNumberEntry.get())
     
     con = sqlite3.connect('cutdata.db')
     cursor = con.cursor()
@@ -120,7 +126,7 @@ def quote():
     print(sheetUnitCost)
     cutTime = (length / cutSpeed) + ((pierce * pierceTime) / 60)
     laserCost = (cutTime/60) * laserRate
-    handleCost = ((handleTime/60) * handleRate) + ((engineerTime/60) * engineerRate)
+    handleCost = (((handleTime/60) * handleRate) * sheetNumber) + ((engineerTime/60) * engineerRate)
     materialCost = ((sheetLength * sheetWidth) / 144) * sheetUnitCost
     totalCost = laserCost + handleCost + materialCost
     print(f"Cut Time: {cutTime}")
@@ -130,7 +136,7 @@ def quote():
     print(f"Total Cost: {totalCost}")
 
     
-calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=7,column=1)
+calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=8,column=1)
 updateBut = tk.Button(root, text="Update", command=quote).grid(row=6,column=4)
 
 root.mainloop()
