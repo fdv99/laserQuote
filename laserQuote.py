@@ -40,7 +40,7 @@ sheetLengthLabel = tk.Label(root, text="Sheet Length:", anchor="e").grid(row=5)
 sheetLengthEntry = tk.Entry(root)
 sheetLengthEntry.grid(row=5,column=1)
 
-sheetWidthLabel = tk.Label(root, text="Sheet Length:", anchor="e").grid(row=6)
+sheetWidthLabel = tk.Label(root, text="Sheet Width:", anchor="e").grid(row=6)
 sheetWidthEntry = tk.Entry(root)
 sheetWidthEntry.grid(row=6,column=1)
 
@@ -59,32 +59,37 @@ totalCostEntry.grid(row=10, column=1)
 laserRateLabel = tk.Label(root, text="Laser Rate:", anchor="e").grid(row=1, column=3)
 laserRateEntry = tk.Entry(root)
 laserRateEntry.grid(row=1, column=4)
+laserRateEntry.insert(0, '105')
 
 handleRateLabel = tk.Label(root, text="Handling Rate:", anchor="e").grid(row=2, column=3)
 handleRateEntry = tk.Entry(root)
 handleRateEntry.grid(row=2, column=4)
+handleRateEntry.insert(0, '65')
 
 handleTimeLabel = tk.Label(root, text="Handling Time:", anchor="e").grid(row=3, column=3)
 handleTimeEntry = tk.Entry(root)
 handleTimeEntry.grid(row=3, column=4)
+handleTimeEntry.insert(0, '25')
 
 engineerRateLabel = tk.Label(root, text="Engineering Rate:", anchor="e").grid(row=4, column=3)
 engineerRateEntry = tk.Entry(root)
 engineerRateEntry.grid(row=4, column=4)
+engineerRateEntry.insert(0, '95')
 
 engineerTimeLabel = tk.Label(root, text="Engineering Time:", anchor="e").grid(row=5, column=3)
 engineerTimeEntry = tk.Entry(root)
 engineerTimeEntry.grid(row=5, column=4)
+engineerTimeEntry.insert(0, '20')
 
 def quote():
     #Standard prices and times for laser, handling, etc..
-    global laserRate = 105
-    global handleRate = 65
-    global handleTime = 30
+    global laserRate 
+    global handleRate 
+    global handleTime 
     global sheetLength
     global sheetWidth
-    global engineerRate = 90
-    global engineerTime = 20
+    global engineerRate 
+    global engineerTime 
     global materialTypeEntry
     global materialThickEntry
     global lengthEntry
@@ -96,6 +101,11 @@ def quote():
     pierce = int(pierceEntry.get())
     sheetLength = int(sheetLengthEntry.get())
     sheetWidth = int(sheetWidthEntry.get())
+    laserRate = int(laserRateEntry.get())
+    handleRate = int(handleRateEntry.get())
+    handleTime = int(handleTimeEntry.get())
+    engineerRate = int(engineerRateEntry.get())
+    engineerTime = int(engineerTimeEntry.get())
     
     con = sqlite3.connect('cutdata.db')
     cursor = con.cursor()
@@ -119,12 +129,8 @@ def quote():
     print(materialCost)
     print(f"Total Cost: {totalCost}")
 
-
-
-# Error because the get is inside quote function    
+    
 calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=7,column=1)
 updateBut = tk.Button(root, text="Update", command=quote).grid(row=6,column=4)
-
-
 
 root.mainloop()
