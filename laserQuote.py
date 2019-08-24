@@ -86,19 +86,6 @@ engineerTimeEntry.grid(row=5, column=4)
 engineerTimeEntry.insert(0, '20')
 
 def quote():
-    #Standard prices and times for laser, handling, etc..
-    global laserRate 
-    global handleRate 
-    global handleTime 
-    global sheetLength
-    global sheetWidth
-    global engineerRate 
-    global engineerTime 
-    global materialTypeEntry
-    global materialThickEntry
-    global lengthEntry
-    global pierceEntry
-    global sheetNumber
     
     materialType = materialTypeEntry.get()
     materialThickness = float(materialThickEntry.get())
@@ -121,9 +108,6 @@ def quote():
     pierceTime = data[4]
     sheetUnitCost = data[7]
     con.close()
-    print(cutSpeed)
-    print(pierceTime)
-    print(sheetUnitCost)
     cutTime = (length / cutSpeed) + ((pierce * pierceTime) / 60)
     laserCost = (cutTime/60) * laserRate
     handleCost = (((handleTime/60) * handleRate) * sheetNumber) + ((engineerTime/60) * engineerRate)
@@ -131,11 +115,8 @@ def quote():
     totalCost = laserCost + handleCost + materialCost
     print(f"Cut Time: {cutTime}")
     print(f"Laser Cost: {laserCost}")
-    print(handleCost)
-    print(materialCost)
     print(f"Total Cost: {totalCost}")
-
-    
+  
 calculateBut = tk.Button(root, text="Calculate", command=quote).grid(row=8,column=1)
 updateBut = tk.Button(root, text="Update", command=quote).grid(row=6,column=4)
 
