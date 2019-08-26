@@ -24,9 +24,12 @@ materialTypeLabel = tk.Label(root, text="Material Type [c,s]:", anchor="e").grid
 materialTypeEntry = tk.Entry(root)
 materialTypeEntry.grid(row=1,column=1)
 
+thickness = ["0.035", "0.047" "0.060", "0.075", "0.105", "0.120", "0.187", "0.250", "0.375", "0.500"]
+thickVariable = tk.StringVar(root)
+thickVariable.set(thickness[5])
 materialThickLabel = tk.Label(root, text="Material Thickness:", anchor="e").grid(row=2)
-materialThickEntry = tk.Entry(root)
-materialThickEntry.grid(row=2,column=1) 
+materialThickOption = tk.OptionMenu(root, thickVariable, *thickness)
+materialThickOption.grid(row=2, column=1)
 
 lengthLabel = tk.Label(root, text="Cut Length:", anchor="e").grid(row=3)
 lengthEntry = tk.Entry(root)
@@ -51,14 +54,18 @@ sheetNumberEntry.grid(row=7,column=1)
 matCostLabel = tk.Label(root, text="Material Cost:", anchor="e").grid(row=9)
 matCostEntry = tk.Entry(root)
 matCostEntry.grid(row=9, column=1)
+#display materialCost in entry
 
 laserCostLabel = tk.Label(root, text="Laser Cost:", anchor="e").grid(row=10)
 laserCostEntry = tk.Entry(root)
 laserCostEntry.grid(row=10, column=1)
+#display laserCost in entry
 
+totalCost = 0
 totalCostLabel = tk.Label(root, text="Total Cost:", anchor="e").grid(row=11)
 totalCostEntry = tk.Entry(root)
 totalCostEntry.grid(row=11, column=1)
+#display totalCost in entry
 
 laserRateLabel = tk.Label(root, text="Laser Rate:", anchor="e").grid(row=1, column=3)
 laserRateEntry = tk.Entry(root)
@@ -86,9 +93,9 @@ engineerTimeEntry.grid(row=5, column=4)
 engineerTimeEntry.insert(0, '20')
 
 def quote():
-    
+    global totalCost
     materialType = materialTypeEntry.get()
-    materialThickness = float(materialThickEntry.get())
+    materialThickness = float(thickVariable.get())
     length = int(lengthEntry.get())
     pierce = int(pierceEntry.get())
     sheetLength = int(sheetLengthEntry.get())
@@ -110,9 +117,12 @@ def quote():
     con.close()
     cutTime = (length / cutSpeed) + ((pierce * pierceTime) / 60)
     laserCost = (cutTime/60) * laserRate
+    laserCostEntry.insert(0, laserCost)
     handleCost = (((handleTime/60) * handleRate) * sheetNumber) + ((engineerTime/60) * engineerRate)
     materialCost = ((sheetLength * sheetWidth) / 144) * sheetUnitCost
+    matCostEntry.insert(0, materialCost)
     totalCost = laserCost + handleCost + materialCost
+    totalCostEntry.insert(0, totalCost)
     print(f"Cut Time: {cutTime}")
     print(f"Laser Cost: {laserCost}")
     print(f"Total Cost: {totalCost}")
