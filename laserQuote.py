@@ -24,7 +24,7 @@ materialTypeLabel = tk.Label(root, text="Material Type [c,s]:", anchor="e").grid
 materialTypeEntry = tk.Entry(root)
 materialTypeEntry.grid(row=1,column=1)
 
-thickness = ["0.035", "0.047" "0.060", "0.075", "0.105", "0.120", "0.187", "0.250", "0.375", "0.500"]
+thickness = ["0.035", "0.047", "0.060", "0.075", "0.105", "0.120", "0.187", "0.250", "0.375", "0.500"]
 thickVariable = tk.StringVar(root)
 thickVariable.set(thickness[5])
 materialThickLabel = tk.Label(root, text="Material Thickness:", anchor="e").grid(row=2)
@@ -107,6 +107,10 @@ def quote():
     engineerTime = int(engineerTimeEntry.get())
     sheetNumber = int(sheetNumberEntry.get())
     
+    totalCostEntry.delete(0, 'end')
+    matCostEntry.delete(0, 'end')
+    laserCostEntry.delete(0, 'end')
+
     con = sqlite3.connect('cutdata.db')
     cursor = con.cursor()
     cursor.execute('SELECT * FROM cutTable WHERE steel = ? AND type = ?', (materialThickness, materialType))
