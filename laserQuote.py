@@ -67,6 +67,14 @@ def quote():
     totalCost = str(round(totalCost, 2))
     totalCostEntry.insert(0, totalCost)
 
+def saveQuote():
+    customer = custVariable.get()
+    jobNumber = jobNumEntry.get()
+    conQ = sqlite3.connect('quotedata.db')
+    cursorQ = conQ.cursor()
+    cursorQ.execute('INSERT ')
+    
+
 material = ["Carbon", "Stainless"]
 matVariable = tk.StringVar(root)
 matVariable.set(material[0])
@@ -81,40 +89,51 @@ materialThickLabel = tk.Label(topFrame, text="Material Thickness:").grid(row=2)
 materialThickOption = tk.OptionMenu(topFrame, thickVariable, *thickness)
 materialThickOption.grid(row=2, column=1)
 
-lengthLabel = tk.Label(topFrame, text="Cut Length:").grid(row=3)
+customerList = ['AMS Automation', 'Innovative Machinery', 'PMI2', 'Technico']
+custVariable = tk.StringVar(root)
+custVariable.set(customer[0])
+customerLabel = tk.Label(topFrame, text="Customer:").grid(row=3)
+customerOption = tk.OptionMenu(topFrame,custVariable, *customerList)
+customerOption.grid(row=3,column=1)
+
+jobNumLabel = tk.Label(topFrame, text="PO/Job Number:").grid(row=4)
+jobNumEntry = tk.Entry(topFrame)
+jobNumEntry.grid(row=4,column=1)
+
+lengthLabel = tk.Label(topFrame, text="Cut Length:").grid(row=5)
 lengthEntry = tk.Entry(topFrame)
-lengthEntry.grid(row=3,column=1)
+lengthEntry.grid(row=5,column=1)
 
-pierceLabel = tk.Label(topFrame, text="Pierces:", anchor="e").grid(row=4)
+pierceLabel = tk.Label(topFrame, text="Pierces:").grid(row=6)
 pierceEntry = tk.Entry(topFrame)
-pierceEntry.grid(row=4,column=1)
+pierceEntry.grid(row=6,column=1)
 
-sheetLengthLabel = tk.Label(topFrame, text="Sheet Length [in]:", anchor="e").grid(row=5)
+sheetLengthLabel = tk.Label(topFrame, text="Sheet Length [in]:").grid(row=7)
 sheetLengthEntry = tk.Entry(topFrame)
-sheetLengthEntry.grid(row=5,column=1)
+sheetLengthEntry.grid(row=7,column=1)
 
-sheetWidthLabel = tk.Label(topFrame, text="Sheet Width [in]:", anchor="e").grid(row=6)
+sheetWidthLabel = tk.Label(topFrame, text="Sheet Width [in]:").grid(row=8)
 sheetWidthEntry = tk.Entry(topFrame)
-sheetWidthEntry.grid(row=6,column=1)
+sheetWidthEntry.grid(row=8,column=1)
 
-formTimeLabel = tk.Label(topFrame, text="Forming Time [min]:", anchor="e").grid(row=7)
+formTimeLabel = tk.Label(topFrame, text="Forming Time [min]:").grid(row=9)
 formTimeEntry = tk.Entry(topFrame)
-formTimeEntry.grid(row=7,column=1)
+formTimeEntry.grid(row=9,column=1)
 
-sheetNumberLabel = tk.Label(topFrame, text="Number of sheets:", anchor="e").grid(row=8)
+sheetNumberLabel = tk.Label(topFrame, text="Number of sheets:").grid(row=10)
 sheetNumberEntry = tk.Entry(topFrame)
-sheetNumberEntry.grid(row=8,column=1)
+sheetNumberEntry.grid(row=10,column=1)
 
 #Calculated Entries for costs and time:
-cutTimeLabel = tk.Label(bottomFrame, text="Cutting Time:", anchor="e").grid(row=0)
+cutTimeLabel = tk.Label(bottomFrame, text="Cutting Time:").grid(row=0)
 cutTimeEntry = tk.Entry(bottomFrame)
 cutTimeEntry.grid(row=0,column=1)
 
-matCostLabel = tk.Label(bottomFrame, text="Material Cost:", anchor="e").grid(row=1)
+matCostLabel = tk.Label(bottomFrame, text="Material Cost:").grid(row=1)
 matCostEntry = tk.Entry(bottomFrame)
 matCostEntry.grid(row=1, column=1)
 
-laserCostLabel = tk.Label(bottomFrame, text="Laser Cost:", anchor="e").grid(row=2)
+laserCostLabel = tk.Label(bottomFrame, text="Laser Cost:").grid(row=2)
 laserCostEntry = tk.Entry(bottomFrame)
 laserCostEntry.grid(row=2, column=1)
 
@@ -148,8 +167,9 @@ engineerTimeLabel = tk.Label(rightFrame, text="Engineering Time:").grid(row=5, c
 engineerTimeEntry = tk.Entry(rightFrame)
 engineerTimeEntry.grid(row=5, column=4)
 engineerTimeEntry.insert(0, '20')
-  
-calculateBut = tk.Button(topFrame, text="Calculate", command=quote).grid(row=9,column=1)
+
+#Buttons  
+calculateBut = tk.Button(topFrame, text="Calculate", command=quote).grid(row=11,column=1)
 
 updateBut = tk.Button(rightFrame, text="Update", command=quote).grid(row=6,column=4)
 
