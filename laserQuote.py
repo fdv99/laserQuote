@@ -117,11 +117,14 @@ def quote():
     con.close()
     cutTime = (length / cutSpeed) + ((pierce * pierceTime) / 60)
     laserCost = (cutTime/60) * laserRate
+    laserCost = str(round(laserCost, 2))
     laserCostEntry.insert(0, laserCost)
     handleCost = (((handleTime/60) * handleRate) * sheetNumber) + ((engineerTime/60) * engineerRate)
     materialCost = ((sheetLength * sheetWidth) / 144) * sheetUnitCost
+    materialCost = str(round(materialCost, 2))
     matCostEntry.insert(0, materialCost)
-    totalCost = laserCost + handleCost + materialCost
+    totalCost = float(laserCost) + float(handleCost) + float(materialCost)
+    totalCost = str(round(totalCost, 2))
     totalCostEntry.insert(0, totalCost)
     print(f"Cut Time: {cutTime}")
     print(f"Laser Cost: {laserCost}")
