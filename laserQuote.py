@@ -6,12 +6,12 @@ import tkinter as tk
 # This program will replace my excel spreadsheet of the same purpose, storing quotes in a database or an excel file
 
 root = tk.Tk()
-topFrame = tk.Frame(root)
-topFrame.pack()
+topFrame = tk.Frame(root, bg="grey")
+topFrame.pack(side="left")
 bottomFrame = tk.Frame(root)
-bottomFrame.pack(side = "bottom")
+bottomFrame.pack(side = "left")
 rightFrame = tk.Frame(root)
-rightFrame.pack(side ="right", fill="y")
+rightFrame.pack(side="right")
 root.title("V6 Laser Quote")
 
 def loadCutDataDB():
