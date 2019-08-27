@@ -3,6 +3,7 @@ import sqlite3
 import csv
 import pandas as pd
 import tkinter as tk
+import datetime
 # This program will replace my excel spreadsheet of the same purpose, storing quotes in a database or an excel file
 
 root = tk.Tk()
@@ -22,6 +23,15 @@ def loadCutDataDB():
     df.to_sql("cutTable", con)
     con.close()
 #loadCutDataDB()
+
+def loadQuoteDataDB():
+    # This creates the quote data table, no need to call again
+    df = pd.read_csv('quotedata.csv')
+    df.columns = df.columns.str.strip()
+    con = sqlite3.connect('quotedata.db')
+    df.to_sql("quoteTable", con)
+    con.close()
+#loadQuoteDataDB()
 
 def laserDB():
     con = sqlite3.connect('cutdata.db')
@@ -70,10 +80,11 @@ def quote():
 def saveQuote():
     customer = custVariable.get()
     jobNumber = jobNumEntry.get()
+    currentDate = datetime.date.today()
     conQ = sqlite3.connect('quotedata.db')
     cursorQ = conQ.cursor()
-    cursorQ.execute('INSERT ')
-    
+    cursorQ.execute('INSERT INTO quoteTable(Customer, PO, Date, Material_Cost, Total_Cost) VALUES(?,?,?,?,?)', (customer, jobNumber, currentDate, materialCost, totalCost))
+    conQ.close()
 
 material = ["Carbon", "Stainless"]
 matVariable = tk.StringVar(root)
@@ -91,7 +102,7 @@ materialThickOption.grid(row=2, column=1)
 
 customerList = ['AMS Automation', 'Innovative Machinery', 'PMI2', 'Technico']
 custVariable = tk.StringVar(root)
-custVariable.set(customer[0])
+custVariable.set(customerList[0])
 customerLabel = tk.Label(topFrame, text="Customer:").grid(row=3)
 customerOption = tk.OptionMenu(topFrame,custVariable, *customerList)
 customerOption.grid(row=3,column=1)
